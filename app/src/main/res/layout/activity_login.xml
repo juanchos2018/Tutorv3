@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Admin.Login">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/fondolibro">
+
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:padding="10dp"
+            android:src="@drawable/logotutor" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+
+
+
+        </LinearLayout>
+
+
+
+        <EditText
+            android:id="@+id/idcodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Codigo"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="#ccc"
+            android:background="@drawable/input1"
+            android:textColor="@android:color/white"
+
+            />
+
+
+
+        <EditText
+            android:id="@+id/idclave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Constraseña"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:password="false"
+            android:textColorHint="#ccc"
+            android:background="@drawable/input1"
+            android:textColor="@android:color/white"
+            android:inputType="textPassword"
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/loginId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bordeboton1"
+            android:text="Iniciar" />
+        <Button
+            android:id="@+id/logi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bordeboton1"
+            android:text="Iniciar"
+            android:visibility="invisible"/>
+
+
+
+        <TextView
+            android:id="@+id/txtiposusu"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
