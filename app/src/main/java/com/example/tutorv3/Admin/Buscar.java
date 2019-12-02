@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.example.tutorv3.ClasesAdmin.Alu;
 import com.example.tutorv3.ClasesAdmin.Alumnos;
+import com.example.tutorv3.ClasesAdmin.Grupo;
+import com.example.tutorv3.ClasesAdmin.Grupos;
 import com.example.tutorv3.ClasesAdmin.Tutores;
 import com.example.tutorv3.ClasesAdmin.Usuarios;
 import com.example.tutorv3.ClasesAdmin.curso;
@@ -59,16 +61,19 @@ public class Buscar extends AppCompatActivity {
     DatabaseReference reference;
     DatabaseReference reference2;
     DatabaseReference reference3;
+    DatabaseReference reference4;
+    DatabaseReference reference5;
     private RecyclerView peoples_list;
     private DatabaseReference peoplesDatabaseReference;
     String dato,nombre,celular,correo;
 
-
+    String idgrupo,nombregrrupo,cursgrupo;
     ArrayList<String> listaCursos2;
+    ArrayList<cursotutor> listaCursos3;
     ArrayAdapter<String> adaptercursos2;
     Spinner spinercurso;
-
-
+    int contador=0;
+    String array1[]=new String[100];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,7 @@ public class Buscar extends AppCompatActivity {
 
         String idtutor;
         listaCursos2=new ArrayList<String>();
+        listaCursos3=new ArrayList<>();
         toolbar = findViewById(R.id.search_appbar);
         setSupportActionBar(toolbar);
        final ActionBar actionBar = getSupportActionBar();
@@ -94,6 +100,9 @@ public class Buscar extends AppCompatActivity {
         correo=getIntent().getStringExtra("co2" );
 
 
+        idgrupo=AgregarCurso.idgruposs;
+        nombregrrupo=AgregarCurso.nombregrupo;
+        cursgrupo=AgregarCurso.cursogrupo;
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,7 +134,7 @@ public class Buscar extends AppCompatActivity {
         peoplesDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Usuarios");
 
         peoplesDatabaseReference.keepSynced(true);
-        Toast.makeText(this, "no "+ nombre, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "no "+ nombre, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -145,8 +154,11 @@ public class Buscar extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull SearchPeopleVH holder, final int position, @NonNull final Usuarios model) {
                 holder.name.setText(model.getNombre());
                 holder.apellido=model.getApellido();
+                holder.codigo.setText(model.getCodigo());
                 holder.id=model.getId();
-
+                holder.codigoalumno=model.getCodigo();
+                holder.telefono=model.getTelefono();
+                final String  codde =model.getCodigo();
             //    holder.id=model.getId();
              //   holder.status.setText(model.getApellido());
 
@@ -155,7 +167,7 @@ public class Buscar extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-
+                        listaCursos2.clear();
                      //   Toast.makeText(Buscar.this, model.getId().toString(), Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(Buscar.this);
@@ -177,7 +189,7 @@ public class Buscar extends AppCompatActivity {
 
                                 reference= FirebaseDatabase.getInstance().getReference("TutorAlumno").child(dato);;
                                 String id  = reference.push().getKey();
-                                Alu track = new Alu(id, model.getNombre(),model.getApellido());
+                                Alu track = new Alu(id, model.getNombre(),model.getApellido(),model.getTelefono());
                                 reference.child(id).setValue(track);
 
                                 reference2=FirebaseDatabase.getInstance().getReference("AlumnoTutor").child(model.getId());
@@ -187,7 +199,23 @@ public class Buscar extends AppCompatActivity {
 
 
 
-                                finish();
+                                reference4= FirebaseDatabase.getInstance().getReference("AlumnoGrupo").child(model.getId());
+
+                                // ALUMNO GRUOPO
+                                int  pos=spinercurso.getSelectedItemPosition();
+                                String ides =array1[pos];
+                                String namegrups=spinercurso.getSelectedItem().toString();
+                                String idgru  = reference4.push().getKey();
+                                Grupo grupo = new Grupo(ides,"Grupo de " +namegrups , namegrups);
+                                reference4.child(idgru).setValue(grupo);
+
+                                reference5= FirebaseDatabase.getInstance().getReference("Grupos").child(ides);
+                                String idgrupos  = reference5.push().getKey();
+                                Grupos grupos = new Grupos(idgrupos,model.getId(),codde,model.getNombre(),"Alumno");
+                                reference5.child(idgrupos).setValue(grupos);
+
+
+                               finish();
 
                             }
                         });
@@ -198,14 +226,27 @@ public class Buscar extends AppCompatActivity {
                         reference3.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                                     String curo=postSnapshot.child("curso").getValue().toString();
-                                    listaCursos2.add(curo);
+                                   // listaCursos2.add(curo);
+
+                                    cursotutor post = postSnapshot.getValue(cursotutor.class);
+                                    cursotutor btIsdDetails = new cursotutor(post.getId(), post.getCurso());
+                                    listaCursos3.add(btIsdDetails);
+                                    array1[contador] = post.getId();
+                                    contador++;
+                                    listaCursos2.add(post.getCurso());
+
+                                    Log.e("mensje",post.getId() + post.getCurso());
+
 
                                 }
                                 adaptercursos2= new ArrayAdapter<>(getBaseContext(),android.R.layout.simple_spinner_item,listaCursos2);
+
                                 spinercurso.setAdapter(adaptercursos2);
+
                             }
 
                             @Override
@@ -242,12 +283,13 @@ public class Buscar extends AppCompatActivity {
 
 
     public static class SearchPeopleVH extends RecyclerView.ViewHolder{
-        TextView name, status;
+        TextView name, codigo;
         CircleImageView profile_pic;
         ImageView verified_icon;
-        String id,apellido;
+        String id,apellido,codigoalumno,telefono;
         public SearchPeopleVH(View itemView) {
             super(itemView);
+            codigo = itemView.findViewById(R.id.idcodigo11);
             name = itemView.findViewById(R.id.idnombre11);
 
         }

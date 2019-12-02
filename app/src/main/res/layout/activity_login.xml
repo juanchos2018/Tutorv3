@@ -42,7 +42,7 @@
             android:id="@+id/idcodigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Codigo"
+            android:text="123456"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -62,7 +62,8 @@
             android:id="@+id/idclave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Constraseña"
+
+            android:text="123456"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

@@ -3,6 +3,8 @@ package com.example.tutorv3.Admin;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.example.tutorv3.ClasesAdmin.Grupo;
+import com.example.tutorv3.ClasesAdmin.Grupos;
 import com.example.tutorv3.ClasesAdmin.Listas;
 import com.example.tutorv3.ClasesAdmin.cursotutor;
 import com.example.tutorv3.R;
@@ -31,7 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AgregarCurso extends AppCompatActivity {
@@ -40,13 +44,21 @@ public class AgregarCurso extends AppCompatActivity {
     private Spinner spinnercursos;
     ArrayAdapter<String> adaperspinner;
     ArrayAdapter<String> adaperspinner2;
-    TextView txtcode,txtname;
+    TextView txtcode,txtname,txtid;
     ListView lisview;
     ImageView img;
+
     private List<cursotutor> liscursos;
     DatabaseReference reference;
+    DatabaseReference reference2;
+    DatabaseReference reference3;
+    DatabaseReference reference4;
+    DatabaseReference reference5;
     private FirebaseAuth firebaseAuth;
     public static ArrayList<String> Cursos;
+    public  static String idgruposs;
+    public  static String nombregrupo;
+    public  static String cursogrupo;
     private ArrayAdapter adaperliscursos;
     private static final String[] ciclos = new String []{"1er Ciclo","2do Ciclo","3er Ciclo","4 Ciclo"};
 
@@ -62,10 +74,13 @@ public class AgregarCurso extends AppCompatActivity {
         txtname=(TextView)findViewById(R.id.idnombrestutor);
         //img=(ImageView)findViewById(R.id.idfototutor);
 
+
         txtcode=(TextView)findViewById(R.id.codigotutor);
         String id=getIntent().getStringExtra("id" );
         String dato=getIntent().getStringExtra("code" );
         String dato2=getIntent().getStringExtra("name" );
+  txtid=(TextView)findViewById(R.id.idntutor);
+  txtid.setText(id);
         txtcode.setText(dato);
         txtname.setText(dato2);
 
@@ -73,6 +88,8 @@ public class AgregarCurso extends AppCompatActivity {
         liscursos= new ArrayList<>();
 
         reference= FirebaseDatabase.getInstance().getReference("Tutorcurso").child(id);
+        reference2= FirebaseDatabase.getInstance().getReference("TutorGrupo").child(id);
+        reference3= FirebaseDatabase.getInstance().getReference("Grupos");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +103,9 @@ public class AgregarCurso extends AppCompatActivity {
     public void mostrarDialogOpcione2(){
 
         Cursos=new ArrayList<String>();
+        Cursos.add("Matematica 1");
+        Cursos.add("Matematica 2");
+        Cursos.add("Fisica");
         Cursos.add("Programacion 1");
         Cursos.add("Programacion 2");
         Cursos.add("Programacion 3");
@@ -119,10 +139,40 @@ public class AgregarCurso extends AppCompatActivity {
                         //   String trackName = editTextTrackName.getText().toString().trim();
                         // int rating = seekBarRating.getProgress();
                         if (!TextUtils.isEmpty(txtcode.getText())) {
+
+
+                            // TUTOR GRUPO
+                            String idgrupo  = reference2.push().getKey();
+                            Grupo grupo = new Grupo(idgrupo,"Grupo de " +spinnercursos.getSelectedItem().toString() , spinnercursos.getSelectedItem().toString());
+                            reference2.child(idgrupo).setValue(grupo);
+
+                            //GRUPOSS
+                            reference3= FirebaseDatabase.getInstance().getReference("Grupos").child(idgrupo);
+                            String idgrupos  = reference3.push().getKey();
+                            Grupos grupos = new Grupos(idgrupos,txtid.getText().toString(), txtcode.getText().toString(),txtname.getText().toString(),"Tutor");
+                            reference3.child(idgrupos).setValue(grupos);
+
+
+                            // TUTOR CURSO
                             String id  = reference.push().getKey();
-                            cursotutor track = new cursotutor(id, spinnercursos.getSelectedItem().toString());
+                            cursotutor track = new cursotutor(idgrupo, spinnercursos.getSelectedItem().toString());
                             reference.child(id).setValue(track);
-                            Toast.makeText(getBaseContext(), "Track saved", Toast.LENGTH_LONG).show();
+
+                            // CHTA GRUPAL 2
+                            reference4= FirebaseDatabase.getInstance().getReference("ChatGrupal2");
+                            Map<String,Object> map = new HashMap<>();
+                            map.put(idgrupo, "");
+                            reference4.updateChildren(map);
+
+                        // CREANDO GRUPO  PARA QUE LA INGENIERA PUEDA VER
+                            reference5 = FirebaseDatabase.getInstance().getReference().child("Grupo").child(idgrupo);
+                            reference5.child("id").setValue(idgrupo);
+                            reference5.child("nombre").setValue("Grupo de " +spinnercursos.getSelectedItem().toString());
+                            reference5.child("curso").setValue(spinnercursos.getSelectedItem().toString());
+
+
+
+                            Toast.makeText(getBaseContext(), "Registrado", Toast.LENGTH_LONG).show();
 
                         } else {
                             Toast.makeText(getBaseContext(), "Please enter track name", Toast.LENGTH_LONG).show();

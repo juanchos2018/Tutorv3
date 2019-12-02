@@ -48,7 +48,12 @@
                         android:text="Codigo Estudiante"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"/>
-
+                    <TextView
+                        android:id="@+id/idntutor"
+                        android:layout_width="176dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        />
 
 
                 </LinearLayout>

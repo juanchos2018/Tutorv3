@@ -5,10 +5,12 @@ public class Alu {
    String id;
    String nombre;
 String apellido;
-    public Alu(String id, String nombre,String apellido) {
+    String telefono;
+    public Alu(String id, String nombre,String apellido,String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.apellido=apellido;
+        this.telefono=telefono;
 
     }
 
@@ -30,5 +32,13 @@ String apellido;
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

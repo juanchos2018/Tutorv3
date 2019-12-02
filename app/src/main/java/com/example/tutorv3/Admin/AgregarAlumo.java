@@ -61,21 +61,29 @@ public class AgregarAlumo extends AppCompatActivity {
     ListView lisview;
 
     private DatabaseReference reference;
+    private DatabaseReference reference2;
     private AlumnosFragment.OnFragmentInteractionListener mListener;
     String id;
     String dato2,dato3,dato4,dato5;
     ImageView imgbuscar;
+    String idgrupo,nombregrrupo,cursgrupo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_alumo);
 
         reference = FirebaseDatabase.getInstance().getReference().child("Usuarios");
+        reference2 = FirebaseDatabase.getInstance().getReference().child("AlumnoGrupo");
         listaPersonaje = new ArrayList<>();
 
         txt1=(TextView)findViewById(R.id.idnombretutor2);
         txt2=(TextView)findViewById(R.id.codigotutor2);
 
+        idgrupo=AgregarCurso.idgruposs;
+        nombregrrupo=AgregarCurso.nombregrupo;
+        cursgrupo=AgregarCurso.cursogrupo;
+
+        Toast.makeText(this, idgrupo, Toast.LENGTH_SHORT).show();
 
          id=getIntent().getStringExtra("id1" );
         String dato=getIntent().getStringExtra("code1" );

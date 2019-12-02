@@ -166,8 +166,8 @@ public class RegistroFragment extends Fragment {
                 e4=(EditText)view2.findViewById(R.id.idtelefono); //Telefono
                 ecorreo=(EditText)view2.findViewById(R.id.idcorreo);  //Coreo
 
-               r1=(RadioButton)view2.findViewById(R.id.rbd1);
-               r2=(RadioButton)view2.findViewById(R.id.rbd2);
+            //   r1=(RadioButton)view2.findViewById(R.id.rbd1);
+              // r2=(RadioButton)view2.findViewById(R.id.rbd2);
                 spinerciclo=(Spinner)view2.findViewById(R.id.spinerciclo);
                 spinerciclo.setAdapter(adapterciclos);
             }
@@ -221,6 +221,7 @@ public class RegistroFragment extends Fragment {
                                 reference.child("nombre").setValue(nombre);
                                 reference.child("apellido").setValue(apellido);
                                 reference.child("tipo").setValue(tipo);
+
                                 if(tipo.equals("Tutor")){
                                     Map<String,Object> map = new HashMap<>();
                                     map.put(current_userID, "");
@@ -284,6 +285,8 @@ public class RegistroFragment extends Fragment {
 
 
     }
+
+    /*
     public void selectedGenderRB(View view) {
         boolean checked = ((RadioButton) view).isChecked();
         switch(view.getId()) {
@@ -301,6 +304,8 @@ public class RegistroFragment extends Fragment {
                 }
         }
     }
+
+     */
     private void registerSuccessPopUp() {
         // Custom Alert Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

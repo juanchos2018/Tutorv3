@@ -128,6 +128,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="left">
+        <!-- Library
 
         <RadioGroup
             android:id="@+id/genderRG"
@@ -152,5 +153,7 @@
 
         </RadioButton>
         </RadioGroup>
+          -->
+
     </LinearLayout>
 </LinearLayout>

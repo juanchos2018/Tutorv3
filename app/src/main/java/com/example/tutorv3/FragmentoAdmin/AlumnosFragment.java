@@ -86,9 +86,6 @@ public class AlumnosFragment extends Fragment {
         listaPersonaje = new ArrayList<>();
         recycler = (RecyclerView) vista.findViewById(R.id.recyclerId2);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-
-
         return vista;
     }
     @Override
@@ -111,6 +108,13 @@ public class AlumnosFragment extends Fragment {
 
                 adapter = new AdapterAlumnos(listaPersonaje);
                 recycler.setAdapter(adapter);
+                adapter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "hola", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
 
             @Override
