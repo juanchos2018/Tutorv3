@@ -213,8 +213,6 @@ public class Buscar extends AppCompatActivity {
                                 String idgrupos  = reference5.push().getKey();
                                 Grupos grupos = new Grupos(idgrupos,model.getId(),codde,model.getNombre(),"Alumno");
                                 reference5.child(idgrupos).setValue(grupos);
-
-
                                finish();
 
                             }

@@ -69,10 +69,12 @@ public class AdapterAlumnos   extends RecyclerView.Adapter<AdapterAlumnos.ViewHo
                     items[0] = "Ver Tutor";
                     items[1] = "Otro";
 
+
                     //dialog.setItems(items);
                     dialog.setTitle("Acciones").setItems(items, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
 
                         }
                     });

@@ -96,8 +96,6 @@ public class AdapterTutores extends RecyclerView.Adapter<AdapterTutores.ViewHold
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            //   Toast.makeText( datgolder.btnprueba.getContext(),"Seleccionaste:" + items[which],Toast.LENGTH_SHORT)
-                            //         .show();
                             if (which==0){
                                 Intent intent= new Intent(datgolder.btnprueba.getContext(), AgregarCurso.class);
                                 //  intent.putExtra("codigo",datgolder.codigo.getText());

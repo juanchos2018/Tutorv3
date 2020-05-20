@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.tutorv3.RegistroProfesores">
+
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:text="correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <EditText
+        android:id="@+id/txtcorreoprofesor"
+        android:hint="correo we"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+
+    <TextView
+        android:text="nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <EditText
+        android:id="@+id/txtnombreprofesor"
+        android:text="nombre profesor"
+        android:inputType="textCapSentences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+    <TextView
+        android:text="apellido profesor"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <EditText
+        android:id="@+id/txtapellidoprofesor"
+        android:text="apellidos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+    <TextView
+        android:text="telefono"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <EditText
+        android:id="@+id/txtnumeroporfesor"
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+    <TextView
+        android:text="nombre salon"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <EditText
+        android:id="@+id/txtnombresalon"
+        android:inputType="textCapSentences"
+        android:text="slain de"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+    <Spinner
+        android:id="@+id/idtipoprofsor"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:background="@drawable/spinner1"
+        >
+
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/idtisede"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/spinner1"
+        >
+
+    </Spinner>
+        <TextView
+            android:text="Edad salon"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <EditText
+            android:id="@+id/txtedadsalon"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </EditText>
+    <Button
+        android:id="@+id/butonregistrar"
+        android:text="REgistrar"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </Button>
+
+
+    </LinearLayout>
+   </ScrollView>
+
+
+</LinearLayout>

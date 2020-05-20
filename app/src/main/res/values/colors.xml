@@ -14,4 +14,19 @@
     <color name="color7">#01DF3A</color>
     <color name="color8">#E7E7EA</color>
 
+    <color name="dot_inactive">#aaa</color>
+    <color name="dot_active">#000000</color>
+    <color name="bgVerde">#08B34F</color>
+    <color name="bgAmarillo">#ECAE27</color>
+    <color name="bgAzul">#0569C3</color>
+    <color name="bgRojo">#EB0A1D</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="color_yelow">#e5be01</color>
+
+
+    <color name="red">#ff0000</color>
+    <color name="green">#00ab03</color>
+    <color name="gray">#c7c7c7</color>
+
+
 </resources>

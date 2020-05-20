@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp" >
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/idtolbar2"
+                            app:subtitleTextAppearance="@style/Card.Subtitle"
+                            app:titleTextAppearance="@style/Card.Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/txtnombresalon"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:text="nombre salon">
+                                </TextView>
+                            </LinearLayout>
+
+                        </androidx.appcompat.widget.Toolbar>
+                    </LinearLayout>
+                    <TextView
+                        android:text="correo"
+                        android:id="@+id/idcorreoprofesor"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                    </TextView>
+
+                    <TextView
+                      android:text="adadsa"
+                        android:id="@+id/idoprofesor"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="right"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:text="Sede :"
+                            android:layout_marginLeft="15dp"
+                            android:textStyle="bold"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                           >
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvsede"
+
+                            android:textSize="17sp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:layout_height="wrap_content"
+                            >
+
+                        </TextView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</LinearLayout>
