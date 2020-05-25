@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tutorv3.AdaptadoresAdmin.AdapterAlumnos2;
 import com.example.tutorv3.ClasesAdmin.ClsAlumnos;
@@ -53,8 +54,10 @@ public class Lista1Fragment extends Fragment {
     ArrayList<ClsAlumnos> listaAlumnos;
     AdapterAlumnos2 adapter;
     TextView txtcantidad;
+    Button btnfaltantes;
 
     int contador=0;
+
     private OnFragmentInteractionListener mListener;
 
     public Lista1Fragment() {
@@ -84,11 +87,10 @@ public class Lista1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_lista1, container, false);
-
-
         listaAlumnos=new ArrayList<>();
         recycler=vista.findViewById(R.id.recylcermisalumnos);
         txtcantidad=(TextView)vista.findViewById(R.id.cantidad);
+        btnfaltantes=(Button)vista.findViewById(R.id.btnfaltantes);
         etbuscarnombre=(EditText) vista.findViewById(R.id.idetbuscarsalon);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -110,7 +112,24 @@ public class Lista1Fragment extends Fragment {
                 filtrar(s.toString());
             }
         });
+        btnfaltantes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarnoverificados();
+            }
+        });
         return vista;
+    }
+
+
+    private void mostrarnoverificados() {
+        int contador2=0;
+        for (ClsAlumnos e: listaAlumnos) {
+            if (e.getVerified()==null){
+                contador2++;
+            }
+        }
+        Toast.makeText(getContext(), "no verifican " +String.valueOf(contador2), Toast.LENGTH_SHORT).show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

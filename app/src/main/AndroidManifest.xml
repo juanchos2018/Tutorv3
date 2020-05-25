@@ -3,7 +3,11 @@
     package="com.example.tutorv3">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- - para usar la camara desde la App -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- escribir en memoria para guardar las fotos -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,17 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Contenedor"></activity>
-        <activity android:name=".ListaAlumnos" />
-        <activity android:name=".Logingoogle" />
-        <activity android:name=".Mensaje" />
-        <activity android:name=".Alumnos" />
-        <activity android:name=".Menu">
+        <activity android:name=".Archivos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Contenedor" />
+        <activity android:name=".ListaAlumnos" />
+        <activity android:name=".Logingoogle" />
+        <activity android:name=".Mensaje" />
+        <activity android:name=".Alumnos" />
+        <activity android:name=".Menu">
+
         </activity>
         <activity android:name=".CambiarAlumno" />
         <activity android:name=".RegistroProfesores" />
