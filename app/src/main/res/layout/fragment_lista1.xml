@@ -1,0 +1,54 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.tutorv3.fragment.Lista1Fragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/input_1">
+
+        <cn.zhaiyifan.rememberedittext.RememberEditText
+            android:id="@+id/idetbuscarsalon"
+            android:layout_marginEnd="05dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:hint="Buscar correo"
+
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            app:autoFill="false"
+            app:autoSave="true"
+            app:rememberId="searchText"
+            app:rememberCount="5"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:background="@drawable/input_1"
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/cantidad"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="8dp"
+        android:id="@+id/recylcermisalumnos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
