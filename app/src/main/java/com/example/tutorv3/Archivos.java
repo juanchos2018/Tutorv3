@@ -1,5 +1,6 @@
 package com.example.tutorv3;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +23,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tutorv3.ClasesAdmin.ClsArchivos;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -33,7 +54,7 @@ public class Archivos extends AppCompatActivity {
 
     EditText etnombreclase,etdescripcionclase,etlinkyoutube;
     TextView etrutaarchivo,tvextension,tvruta,nombre,peso;
-    Button btnabrregaleria,btnregistratarea;
+    Button btnabrregaleria,btnsubir;
     ImageView imgfoto;
     ProgressDialog progressDialog;
 
@@ -49,11 +70,11 @@ public class Archivos extends AppCompatActivity {
     String tipoarchivo;
 
     Uri uri;
+
     Uri pdfurl;
-    String tipodocumento;
+    String tipodocumento,nombrearchivo;
     String idarvhivo;
-    String correoprofe,nombresalon;
-    int numerodeclase;
+
 
     android.app.AlertDialog.Builder builder1;
     AlertDialog alert;
@@ -67,7 +88,9 @@ public class Archivos extends AppCompatActivity {
         tvruta=(TextView)findViewById(R.id.ruta);
         nombre=(TextView)findViewById(R.id.nombre);
         peso=(TextView)findViewById(R.id.peso);
-
+        btnsubir=(Button)findViewById(R.id.btnsubir);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        referenceclaseprofesor=  FirebaseDatabase.getInstance().getReference("Archivos");
         if(solicitaPermisosVersionesSuperiores()){
 
         }
@@ -78,6 +101,13 @@ public class Archivos extends AppCompatActivity {
                 tvextension.setText("");
                selectPdf();
               //  browseDocuments();
+            }
+        });
+
+        btnsubir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SubirArchiviStorage("tipo",pdfurl);
             }
         });
     }
@@ -121,6 +151,91 @@ public class Archivos extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,"ChooseFile"), 86);
 
     }
+    private void SubirArchiviStorage(final String tipo, Uri pdfurl){
+
+
+        if (pdfurl==null){
+
+            String mensaje="falta adjuntar el archivo de tarea";
+            String estado="fail";
+            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setTitle("Subiendo..");
+            progressDialog.setProgress(0);
+            progressDialog.show();
+            progressDialog.setCancelable(false);
+
+            final StorageReference mountainsRef=mStorageRef.child("coreo").child(nombrearchivo);
+            //    final StorageReference storageReference =storage.getReference();  // return root path
+            final UploadTask uploadTask = mountainsRef.putFile(pdfurl);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            return mountainsRef.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+
+                                Uri dowloand=task.getResult();
+                              String id  = referenceclaseprofesor.push().getKey();
+                              ClsArchivos obj= new ClsArchivos(id,dowloand.toString(),"clase 2","fecha","file","1",nombrearchivo);
+                             referenceclaseprofesor.child(id).setValue(obj);
+
+                            } else {
+                                //  Toast.makeText(EditarPerfil.this, "Error al subir", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+                }
+
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Archivos.this, "Error " +e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    //track the progress of = our upload
+                    int currentprogress= (int) (100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                    progressDialog.setProgress(currentprogress);
+                    if (currentprogress==100){
+                        progressDialog.dismiss();
+
+                        String mensaje="Agregado Tarea";
+                        String estadome="ok";
+                        Toast.makeText(Archivos.this, mensaje, Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                }
+            });
+
+
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -139,8 +254,6 @@ public class Archivos extends AppCompatActivity {
                 tipodocumento="file";
                 idarvhivo =data.getData().getLastPathSegment();
                 String extenios=getExtension(data.getData().getLastPathSegment());
-
-
                 tvruta.setText(data.toString());
                 String mimeType = getContentResolver().getType(pdfurl);
 
@@ -154,6 +267,7 @@ public class Archivos extends AppCompatActivity {
                 returnCursor.moveToFirst();
 
                 nombre.setText(returnCursor.getString(nameIndex));
+                nombrearchivo=returnCursor.getString(nameIndex);
                 peso.setText(Long.toString(returnCursor.getLong(sizeIndex)));
 
             }
@@ -226,6 +340,15 @@ public class Archivos extends AppCompatActivity {
         }
     }
 
+    public static String getExtension3(String filename) {
+        //TODO : ESTO ES PARA SACAR LA EXTENSION DEL TIPO DE ARCHIVO
+        int index = filename.lastIndexOf('.');
+        if (index == -1) {
+            return "";
+        } else {
+            return filename.substring(index + 1);
+        }
+    }
     public static String getExtension2(String filename) {
         int index = filename.lastIndexOf('/');
         if (index == -1) {

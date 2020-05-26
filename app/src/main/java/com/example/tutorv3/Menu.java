@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class Menu extends AppCompatActivity {
 
-    Button b1,b2,b3;
+    Button b1,b2,b3,b4,b5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +18,8 @@ public class Menu extends AppCompatActivity {
         b1=(Button)findViewById(R.id.idnuevoprofe);
         b2=(Button)findViewById(R.id.idmodificar);
         b3=(Button)findViewById(R.id.btnalumnos);
+        b4=(Button)findViewById(R.id.btnsuvirarchvios);
+        b5=(Button)findViewById(R.id.btnlistararchvos);
 
 
         b1.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +38,18 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Menu.this,Contenedor.class));
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Menu.this,Archivos.class));
+            }
+        });
+        b5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Menu.this,ListaArchivos.class));
             }
         });
     }
